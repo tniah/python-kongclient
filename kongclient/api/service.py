@@ -8,8 +8,16 @@ class ServiceManager(base.Manager):
     FIELDS = ('name', 'protocol', 'host', 'port', 'path', 'url', 'retries',
               'connect_timeout', 'write_timeout', 'read_timeout', 'client_certificate', 'tags')
 
-    def list(self):
+    def list(self, tags=None):
+        if tags:
+            return self._list(url='/services?tags=%s' % tags, response_key='data')
         return self._list(url='/services', response_key='data')
+
+    def list_routes(self, service_id):
+        return self._list(url='/services/%s/routes' % service_id, response_key='data')
+
+    def list_plugins(self, service_id):
+        return self._list(url='/services/%s/plugins' % service_id, response_key='data')
 
     def get(self, service_id):
         return self._get(url='/services/%s' % service_id)
@@ -41,3 +49,38 @@ class ServiceManager(base.Manager):
 
     def delete(self, service_id):
         return self._delete(url='/services/%s' % service_id)
+
+    def add_route(self, service_id, name, hosts, protocols=('http', 'https'), headers=None,
+                  methods=('GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS', 'HEAD'), paths=None,
+                  https_redirect_status_code=426, regex_priority=0, strip_path=False, preserve_host=True,
+                  snis=None, sources=None, destinations=None, tags=None):
+        body = {
+            'name': name,
+            'hosts': hosts,
+            'protocols': protocols,
+            'methods': methods,
+            'paths': paths,
+            'headers': headers,
+            'https_redirect_status_code': https_redirect_status_code,
+            'regex_priority': regex_priority,
+            'strip_path': strip_path,
+            'preserve_host': preserve_host,
+            'snis': snis,
+            'sources': sources,
+            'destinations': destinations,
+            'tags': tags or [name]
+        }
+        return self._create(url='/services/%s/routes' % service_id, body=body)
+
+    def add_plugin(self, service_id, name, config=None, run_on='first',
+                   protocols=('http', 'https'), enabled=True, tags=None):
+        body = {
+            'name': name,
+            'run_on': run_on,
+            'protocols': protocols,
+            'enabled': enabled,
+            'tags': tags or [name]
+        }
+        if config:
+            body['config'] = config
+        return self._create(url='/services/%s/plugins' % service_id, body=body)

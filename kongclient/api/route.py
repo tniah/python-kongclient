@@ -9,7 +9,9 @@ class RouteManager(base.Manager):
               'https_redirect_status_code', 'regex_priority', 'strip_path',
               'preserve_host', 'snis', 'sources', 'destinations', 'service', 'tags')
 
-    def list(self):
+    def list(self, tags=None):
+        if tags:
+            return self._list(url='/routes?tags=%s' % tags, response_key='data')
         return self._list(url='/routes', response_key='data')
 
     def get(self, route_id):
@@ -46,3 +48,16 @@ class RouteManager(base.Manager):
 
     def delete(self, route_id):
         return self._delete(url='/routes/%s' % route_id)
+
+    def add_plugin(self, route_id, name, config=None, run_on='first',
+                   protocols=('http', 'https'), enabled=True, tags=None):
+        body = {
+            'name': name,
+            'run_on': run_on,
+            'protocols': protocols,
+            'enabled': enabled,
+            'tags': tags or [name]
+        }
+        if config:
+            body['config'] = config
+        return self._create(url='/routes/%s/plugins' % route_id, body=body)

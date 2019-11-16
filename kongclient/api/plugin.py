@@ -8,7 +8,9 @@ class PluginManager(base.Manager):
     FIELDS = ('name', 'route', 'service', 'consumer',
               'config', 'run_on', 'protocols', 'enabled', 'tags')
 
-    def list(self):
+    def list(self, tags=None):
+        if tags:
+            return self._list(url='/plugins?tags=%s' % tags, response_key='data')
         return self._list(url='/plugins', response_key='data')
 
     def get(self, plugin_id):
