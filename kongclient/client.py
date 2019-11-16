@@ -26,3 +26,6 @@ class Client:
         self.services = api.ServiceManager(self)
         self.routes = api.RouteManager(self)
         self.plugins = api.PluginManager(self)
+        self.certificates = api.CertificateManager(self)
+        self.tags = api.TagManager(self)
+        self.info = api.NodeInfoManager(self)

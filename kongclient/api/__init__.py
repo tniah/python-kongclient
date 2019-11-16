@@ -4,3 +4,4 @@ from kongclient.api.route import RouteManager
 from kongclient.api.plugin import PluginManager
 from kongclient.api.certificate import CertificateManager
 from kongclient.api.tag import TagManager
+from kongclient.api.node_info import NodeInfoManager

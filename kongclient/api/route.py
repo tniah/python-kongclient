@@ -14,8 +14,17 @@ class RouteManager(base.Manager):
             return self._list(url='/routes?tags=%s' % tags, response_key='data')
         return self._list(url='/routes', response_key='data')
 
+    def list_plugins(self, route_id):
+        return self._list(url='/routes/%s/plugins' % route_id, response_key='data')
+
     def get(self, route_id):
         return self._get(url='/routes/%s' % route_id)
+
+    def get_service(self, route_id):
+        return self._get(url='/routes/%s/service' % route_id)
+
+    def get_plugin(self, route_id, plugin_id):
+        return self._get(url='/routes/%s/plugins/%s' % (route_id, plugin_id))
 
     def create(self, name, hosts, service_id, protocols=('http', 'https'), headers=None,
                methods=('GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS', 'HEAD'), paths=None,

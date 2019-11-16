@@ -22,6 +22,12 @@ class ServiceManager(base.Manager):
     def get(self, service_id):
         return self._get(url='/services/%s' % service_id)
 
+    def get_route(self, service_id, route_id):
+        return self._get(url='/services/%s/routes/%s' % (service_id, route_id))
+
+    def get_plugin(self, service_id, plugin_id):
+        return self._get(url='/services/%s/plugins/%s' % (service_id, plugin_id))
+
     def create(self, name, url=None, protocol='http', host=None, port=80, path=None,
                retries=5, connect_timeout=60000, write_timeout=60000, read_timeout=60000,
                client_certificate=None, tags=None):
