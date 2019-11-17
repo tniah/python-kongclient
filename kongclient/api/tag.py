@@ -12,6 +12,6 @@ class TagManager(base.Manager):
     def get(self, tag):
         """ Get a list of entities with the specified tag.
 
-        :param tag: a string associated with entities, e.g, 'user-level'
+        :param tag: A string associated with entities, e.g, 'user-level'
         """
         return self._list(url='/tags/%s' % tag, response_key='data')

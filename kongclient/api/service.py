@@ -11,7 +11,7 @@ class ServiceManager(base.Manager):
     def list(self, tags=None):
         """ Get a list of all services.
 
-        :param tags: a string associated to services in Kong, e.g, 'admin,example'
+        :param tags: A string associated to services in Kong, e.g, 'admin,example'
         """
         if tags:
             return self._list(url='/services?tags=%s' % tags, response_key='data')
