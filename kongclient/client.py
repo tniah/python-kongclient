@@ -29,5 +29,7 @@ class Client:
         self.plugins = api.PluginManager(self)
         self.certificates = api.CertificateManager(self)
         self.snis = api.SNIManager(self)
+        self.upstreams = api.UpstreamManager(self)
+        self.targets = api.TargetManager(self)
         self.tags = api.TagManager(self)
         self.info = api.NodeInfoManager(self)

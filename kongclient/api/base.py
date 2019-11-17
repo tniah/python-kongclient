@@ -38,13 +38,12 @@ class Manager:
         body = resp.json()
         return body
 
-    def _delete(self, url):
-
-        resp = self.api.client.delete(url=url)
+    def _set(self, url):
+        resp = self.api.client.post(url=url)
         status_code = resp.status_code
         req_url = resp.request.url
         if status_code != 204:
-            raise APIException(http_status=status_code, message=resp.text, method='DELETE', url=req_url)
+            raise APIException(http_status=status_code, message=resp.text, method='POST', url=req_url)
         return None
 
     def _update(self, url, body):
@@ -56,3 +55,12 @@ class Manager:
             raise APIException(http_status=status_code, message=resp.text, method='PATCH', url=req_url)
         body = resp.json()
         return body
+
+    def _delete(self, url):
+
+        resp = self.api.client.delete(url=url)
+        status_code = resp.status_code
+        req_url = resp.request.url
+        if status_code != 204:
+            raise APIException(http_status=status_code, message=resp.text, method='DELETE', url=req_url)
+        return None
