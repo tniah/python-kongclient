@@ -4,25 +4,24 @@ from requests.compat import urljoin
 from kongclient import api
 
 
-class SessionClient(requests.Session):
+class HttpSession(requests.Session):
 
     def __init__(self, base_url, verify_ssl=False):
 
-        super(SessionClient, self).__init__()
+        super(HttpSession, self).__init__()
         self.verify = bool(verify_ssl)
         self.base_url = base_url
 
     def request(self, method, url, *args, **kwargs):
 
         url = urljoin(base=self.base_url, url=url)
-        return super(SessionClient, self).request(method, url, *args, **kwargs)
+        return super(HttpSession, self).request(method, url, *args, **kwargs)
 
 
-class Client:
+class KongClient:
 
     def __init__(self, kong_url, verify_ssl=True):
-
-        self.client = SessionClient(base_url=kong_url, verify_ssl=verify_ssl)
+        self.client = HttpSession(base_url=kong_url, verify_ssl=verify_ssl)
         self.services = api.ServiceManager(self)
         self.routes = api.RouteManager(self)
         self.consumers = api.ConsumerManager(self)
