@@ -22,6 +22,9 @@ class PluginManager(base.Manager):
     def get_route(self, plugin_id):
         return self._get(url='/plugins/%s/route' % plugin_id)
 
+    def get_consumer(self, plugin_id):
+        return self._get(url='/plugins/%s/consumer' % plugin_id)
+
     def create(self, name, route_id=None, service_id=None, consumer_id=None, config=None,
                run_on='first', protocols=('http', 'https'), enabled=True, tags=None):
         body = {
