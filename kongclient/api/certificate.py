@@ -15,19 +15,20 @@ class CertificateManager(base.Manager):
     def list_services(self, certificate_id):
         return self._list(url='/certificates/%s/services' % certificate_id, response_key='data')
 
+    def list_snis(self, certificate_id):
+        return self._list(url='/certificates/%s/snis' % certificate_id, response_key='data')
+
     def get(self, certificate_id):
         return self._get(url='/certificates/%s' % certificate_id)
 
     def get_service(self, certificate_id, service_id):
         return self._get(url='/certificates/%s/services/%s' % (certificate_id, service_id))
 
+    def get_sni(self, certificate_id, sni_id):
+        return self._get(url='/certificates/%s/snis/%s' % (certificate_id, sni_id))
+
     def create(self, cert, key, snis=None, tags=None):
-        body = {
-            'cert': cert,
-            'key': key,
-            'snis': snis,
-            'tags': tags
-        }
+        body = {'cert': cert, 'key': key, 'snis': snis, 'tags': tags}
         return self._create(url='/certificates', body=body)
 
     def update(self, certificate_id, **kwargs):
@@ -52,3 +53,7 @@ class CertificateManager(base.Manager):
         else:
             body['url'] = url
         return self._create(url='/certificates/%s/services' % certificate_id, body=body)
+
+    def add_sni(self, certificate_id, name, tags=None):
+        body = {'name': name, 'tags': tags or [name]}
+        return self._create(url='/certificates/%s/snis' % certificate_id, body=body)

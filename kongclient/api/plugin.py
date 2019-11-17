@@ -16,6 +16,12 @@ class PluginManager(base.Manager):
     def get(self, plugin_id):
         return self._get(url='/plugins/%s' % plugin_id)
 
+    def get_enabled_plugins(self):
+        return self._get(url='/plugins/enabled')
+
+    def get_schema(self, plugin_id):
+        return self._get(url='/plugins/schema/%s' % plugin_id)
+
     def get_service(self, plugin_id):
         return self._get(url='/plugins/%s/service' % plugin_id)
 
@@ -44,7 +50,7 @@ class PluginManager(base.Manager):
             body['config'] = config
         return self._create(url='/plugins', body=body)
 
-    def update(self, plugin_id, **kwargs):
+    def _update(self, url, **kwargs):
         body = {k: v for k, v in kwargs.items() if k in self.FIELDS}
         if 'route' in body and body['route']:
             body['route'] = {'id': body['route']}
@@ -52,4 +58,28 @@ class PluginManager(base.Manager):
             body['service'] = {'id': body['service']}
         if 'consumer' in body and body['consumer']:
             body['consumer'] = {'id': body['consumer']}
-        return self._update(url='/plugins/%s' % plugin_id, body=body)
+        return super(PluginManager, self)._update(url=url, body=body)
+
+    def update(self, plugin_id, **kwargs):
+        return self._update(url='/plugins/%s' % plugin_id, **kwargs)
+
+    def update_by_route(self, route_id, plugin_id, **kwargs):
+        return self._update(url='/routes/%s/plugins/%s' % (route_id, plugin_id), **kwargs)
+
+    def update_by_service(self, service_id, plugin_id, **kwargs):
+        return self._update(url='/services/%s/plugins/%s' % (service_id, plugin_id), **kwargs)
+
+    def update_by_consumer(self, consumer_id, plugin_id, **kwargs):
+        return self._update(url='/consumers/%s/plugins/%s' % (consumer_id, plugin_id), **kwargs)
+
+    def delete(self, plugin_id):
+        return self._delete(url='/plugins/%s' % plugin_id)
+
+    def delete_by_route(self, route_id, plugin_id):
+        return self._delete(url='/routes/%s/plugins/%s' % (route_id, plugin_id))
+
+    def delete_by_service(self, service_id, plugin_id):
+        return self._delete(url='/services/%s/plugins/%s' % (service_id, plugin_id))
+
+    def delete_by_consumer(self, consumer_id, plugin_id):
+        return self._delete(url='/consumers/%s/plugins/%s' % (consumer_id, plugin_id))

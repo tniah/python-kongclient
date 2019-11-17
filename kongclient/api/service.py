@@ -47,14 +47,32 @@ class ServiceManager(base.Manager):
             body['client_certificate'] = {'id': client_certificate}
         return self._create(url='/services', body=body)
 
-    def update(self, service_id, **kwargs):
+    def _update(self, url, **kwargs):
         body = {k: v for k, v in kwargs.items() if k in self.FIELDS}
         if 'client_certificate' in body and body['client_certificate']:
             body['client_certificate'] = {'id': body['client_certificate']}
-        return self._update(url='/services/%s' % service_id, body=body)
+        return super(ServiceManager, self)._update(url=url, body=body)
+
+    def update(self, service_id, **kwargs):
+        return self._update(url='/services/%s' % service_id, **kwargs)
+
+    def update_by_route(self, route_id, **kwargs):
+        return self._update(url='/routes/%s/service' % route_id, **kwargs)
+
+    def update_by_plugin(self, plugin_id, **kwargs):
+        return self._update(url='/plugins/%s/service' % plugin_id, **kwargs)
+
+    def update_by_certificate(self, certificate_id, service_id, **kwargs):
+        return self._update(url='/certificates/%s/services/%s' % (certificate_id, service_id), **kwargs)
 
     def delete(self, service_id):
         return self._delete(url='/services/%s' % service_id)
+
+    def delete_by_route(self, route_id):
+        return self._delete(url='/routes/%s/service' % route_id)
+
+    def delete_by_certificate(self, certificate_id, service_id):
+        return self._delete(url='/certificates/%s/services/%s' % (certificate_id, service_id))
 
     def add_route(self, service_id, name, hosts, protocols=('http', 'https'), headers=None,
                   methods=('GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS', 'HEAD'), paths=None,

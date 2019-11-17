@@ -49,14 +49,26 @@ class RouteManager(base.Manager):
         }
         return self._create(url='/routes', body=body)
 
-    def update(self, route_id, **kwargs):
+    def _update(self, url, **kwargs):
         body = {k: v for k, v in kwargs.items() if k in self.FIELDS}
         if 'service' in body and body['service']:
             body['service'] = {'id': body['service']}
-        return self._update(url='/routes/%s' % route_id, body=body)
+        return super(RouteManager, self)._update(url=url, body=body)
+
+    def update(self, route_id, **kwargs):
+        return self._update(url='/routes/%s' % route_id, **kwargs)
+
+    def update_by_service(self, service_id, route_id, **kwargs):
+        return self._update(url='/services/%s/routes/%s' % (service_id, route_id), **kwargs)
+
+    def update_by_plugin(self, plugin_id, **kwargs):
+        return self._update(url='/plugins/%s/route' % plugin_id, **kwargs)
 
     def delete(self, route_id):
         return self._delete(url='/routes/%s' % route_id)
+
+    def delete_by_service(self, service_id, route_id):
+        return self._delete(url='/services/%s/routes/%s' % (service_id, route_id))
 
     def add_plugin(self, route_id, name, config=None, run_on='first',
                    protocols=('http', 'https'), enabled=True, tags=None):
