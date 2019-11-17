@@ -7,7 +7,6 @@ from kongclient import api
 class HttpSession(requests.Session):
 
     def __init__(self, base_url, verify_ssl=False):
-
         super(HttpSession, self).__init__()
         self.verify = bool(verify_ssl)
         self.base_url = base_url
