@@ -16,6 +16,7 @@ setuptools.setup(
     packages=['kongclient'],
     install_requires=['requests'],
     include_package_data=True,
+    license='BSD',
     classifiers=[
         'Intended Audience :: Developers',
         'License :: OSI Approved :: BSD License',
