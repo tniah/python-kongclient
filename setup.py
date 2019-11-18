@@ -12,6 +12,7 @@ setuptools.setup(
     author_email='tronghaibk2008@gmail.com',
     description='A python library for the Kong admin API',
     long_description=long_description,
+    long_description_content_type='text/markdown',
     url='https://github.com/haintd/python-kongclient',
     packages=setuptools.find_packages(),
     install_requires=['requests'],
