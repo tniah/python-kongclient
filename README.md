@@ -30,7 +30,7 @@ kong_client = KongClient(kong_url='https://localhost:8444', verify_ssl=True)
 kong_client.services.create(name='httpbin', url='https://httpbin.org')
 kong_client.services.add_route(service_id='httpbin', name='route', hosts=['httpbin.org'])
 kong_client.routes.list()
-...
+... 
 ```
 
 **For Python-Flask**
