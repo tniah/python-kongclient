@@ -48,7 +48,7 @@ class RouteManager(base.Manager):
         """
         return self._get(url='/routes/%s/plugins/%s' % (route_id, plugin_id))
 
-    def create(self, name, hosts, service_id, protocols=('http', 'https'), headers=None,
+    def create(self, name, hosts=None, service_id=None, protocols=('http', 'https'), headers=None,
                methods=('GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS', 'HEAD'), paths=None,
                https_redirect_status_code=426, regex_priority=0, strip_path=False, preserve_host=True,
                snis=None, sources=None, destinations=None, tags=None):
@@ -94,9 +94,10 @@ class RouteManager(base.Manager):
             'snis': snis,
             'sources': sources,
             'destinations': destinations,
-            'service': {'id': service_id},
             'tags': tags or [name]
         }
+        if service_id:
+            body['service'] = {'id': service_id}
         return self._create(url='/routes', body=body)
 
     def _update(self, url, **kwargs):
