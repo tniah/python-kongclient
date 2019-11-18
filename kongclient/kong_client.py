@@ -18,6 +18,12 @@ class HttpSession(requests.Session):
 
 
 class KongClient:
+    """ Kong class for manipulating Kong resources (service, route, plugin, etc.).
+
+    :param kong_url: The URL of the Kong admin API.
+    :param verify_ssl: If you want to disable SSL verification,
+    set verify_ssl is False, otherwise set it is True.
+    """
 
     def __init__(self, kong_url, verify_ssl=True):
         self.client = HttpSession(base_url=kong_url, verify_ssl=verify_ssl)

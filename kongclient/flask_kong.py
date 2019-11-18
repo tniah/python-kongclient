@@ -3,12 +3,14 @@ from kongclient.kong_client import KongClient as _KongClient
 
 
 class KongClient(_KongClient):
+    """ Kong class for the Python-Flask framework. """
 
     def __init__(self, app=None):
         if app is not None:
             self.init_app(app=app)
 
     def init_app(self, app):
+        # Configuration defaults
         app.config.setdefault('KONG_ADMIN_URL', 'https://localhost:8444')
         app.config.setdefault('KONG_ADMIN_VERIFY_SSL', False)
         super(KongClient, self).__init__(

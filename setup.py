@@ -6,11 +6,11 @@ with open('README.md', 'r') as fh:
     long_description = fh.read()
 
 setuptools.setup(
-    name='Kong-Client',
+    name='python-kongclient',
     version='1.1.0',
     author='HaiNT',
     author_email='tronghaibk2008@gmail.com',
-    description='A python client for the Kong API',
+    description='A python library for the Kong admin API',
     long_description=long_description,
     url='https://github.com/haintd/python-kongclient',
     packages=['kongclient'],

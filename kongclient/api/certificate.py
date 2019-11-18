@@ -3,7 +3,7 @@ from kongclient.api import base
 
 
 class CertificateManager(base.Manager):
-    """ Manager class for manipulating kong cerfiticates. """
+    """ Manager class for manipulating kong certificates. """
 
     FIELDS = ('cert', 'key', 'tags', 'snis')
 
