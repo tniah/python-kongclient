@@ -20,7 +20,7 @@ pip install python-kongclient
 
 **Import into your project**
 ```sh
-from python-kongclient import KongClient
+from kongclient import KongClient
 ```
 
 **Create a kong client**
@@ -36,7 +36,7 @@ kong_client.routes.list()
 **For Python-Flask**
 ```sh
 from flask import Flask
-from python-kongclient.flask_kong import KongClient
+from kongclient.flask import KongClient
 
 app = Flask(__name__)
 app.config['KONG_ADMIN_URL'] = 'https://localhost:8444'
