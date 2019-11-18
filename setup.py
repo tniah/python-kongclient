@@ -14,7 +14,6 @@ setuptools.setup(
     long_description=long_description,
     url='https://github.com/haintd/python-kongclient',
     packages=setuptools.find_packages(),
-    package_dir={'kong_client': ''},
     install_requires=['requests'],
     include_package_data=True,
     license='BSD',

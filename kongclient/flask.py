@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
-from kongclient import kong_client
+from kongclient import client
 
 
-class KongClient(kong_client.KongClient):
+class KongClient(client.KongClient):
     """ Kong class for the Python-Flask framework. """
 
     def __init__(self, app=None):
