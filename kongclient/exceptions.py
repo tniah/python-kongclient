@@ -26,3 +26,4 @@ class APIException(Exception):
             formatted_string += ' (Method %s)' % self.method
         if self.url:
             formatted_string += ' (Url %s)' % self.url
+        return formatted_string
