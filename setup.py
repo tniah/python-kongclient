@@ -7,7 +7,7 @@ with open('README.md', 'r') as fh:
 
 setuptools.setup(
     name='python-kongclient',
-    version='1.1.0',
+    version='1.1.1',
     author='HaiNT',
     author_email='tronghaibk2008@gmail.com',
     description='A python library for the Kong admin API',
