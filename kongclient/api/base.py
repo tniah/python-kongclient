@@ -23,16 +23,16 @@ class Manager:
         resp = self.api.client.get(url=url)
         if resp.status_code != 200:
             raise APIException(http_status=resp.status_code, message=resp.text, method='GET', url=resp.request.url)
-        body = resp.json()
+        result = resp.json()[response_key]
         try:
-            next_url = body['next']
+            next_url = resp.json()['next']
         except KeyError:
             next_url = None
         while next_url is not None:
             resp = self.api.client.get(url=next_url)
-            body[response_key] += resp.json()[response_key]
+            result += resp.json()[response_key]
             next_url = resp.json()['next']
-        return body[response_key]
+        return result
 
     def _get(self, url):
         """ Get an object from collection.
