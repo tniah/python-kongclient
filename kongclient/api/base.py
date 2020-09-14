@@ -30,6 +30,8 @@ class Manager:
             next_url = None
         while next_url is not None:
             resp = self.api.client.get(url=next_url)
+            if resp.status_code != 200:
+                raise APIException(http_status=resp.status_code, message=resp.text, method='GET', url=resp.request.url)
             result += resp.json()[response_key]
             next_url = resp.json()['next']
         return result
