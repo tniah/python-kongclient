@@ -9,3 +9,4 @@ from kongclient.api.upstream import UpstreamManager
 from kongclient.api.target import TargetManager
 from kongclient.api.tag import TagManager
 from kongclient.api.node_info import NodeInfoManager
+from kongclient.api.acl import ACLManager

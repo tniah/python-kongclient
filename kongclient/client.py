@@ -37,3 +37,4 @@ class KongClient:
         self.targets = api.TargetManager(self)
         self.tags = api.TagManager(self)
         self.info = api.NodeInfoManager(self)
+        self.acls = api.ACLManager(self)

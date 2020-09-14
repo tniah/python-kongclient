@@ -24,6 +24,14 @@ class ConsumerManager(base.Manager):
         """
         return self._list(url='/consumers/%s/plugins' % consumer_id, response_key='data')
 
+    def list_acls(self, consumer_id):
+        """ Get a list of ACLs associated to a specific consumer.
+
+        :param consumer_id: The unique identifier or the name attribute
+        of the Consumer whose Plugins are to be retrieved.
+        """
+        return self._list(url='/consumers/%s/acls' % consumer_id, response_key='data')
+
     def get(self, consumer_id):
         """ Get details of a consumer.
 
