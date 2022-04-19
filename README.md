@@ -43,7 +43,7 @@ app.config['KONG_ADMIN_URL'] = 'https://localhost:8444'
 app.config['KONG_ADMIN_VERIFY_SSL'] = True
 kong_client = KongClient(app)
 
-@app.route('/services', methods=['GET])
+@app.route('/services', methods=['GET'])
 def get_services():
    return kong_client.services.list()
 ```
